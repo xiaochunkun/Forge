@@ -84,6 +84,7 @@ public class Message {
         yml.set("NoMaterial", "§c材料不全，已经退还全部材料");
         yml.set("Announce", "§a恭喜 §e[§4%player%§e] §a锻造出 %item%");
         yml.set("Reload", "§a配置重载已完成!!");
+        yml.set("Successful","§a 锻造完成！已发送物品到你的背包!!");
         try {
             yml.save(file);
         } catch (IOException e) {

@@ -33,68 +33,18 @@ public class ClickInventoryEvent implements Listener {
         final Player player = (Player) event.getWhoClicked();
         final Inventory inv = event.getInventory();
         final ItemStack eItem = event.getCurrentItem();
+        final List<String> list =new ArrayList<String>();
+        list.add("锻造台");
+        list.add("可锻造列表");
+        list.add("开始锻造");
+        list.add("历史锻造");
+        list.add("锻造中");
         switch (inv.getName()) {
             case "锻造台":
-            case "可锻造列表":
-            case "开始锻造":
-            case "历史锻造":
-            case "请拿走你锻造的装备":
-            case "锻造中":
                 event.setCancelled(true);
                 break;
-        }
-        if ((event.getCurrentItem() != null) && (!event.getCurrentItem().getType().equals(Material.AIR))) {
-            ItemMeta eMeta = eItem.getItemMeta();
-            switch (eMeta.getDisplayName()) {
-                case "查看已学习的图纸":
-                    Turn.setMapNum(Turn.getMapNum() + 1);
-                    pInv = CreateInventory.getInventory(1, player);
-                    player.closeInventory();
-                    player.openInventory(pInv);
-                    break;
-                case "查看历史锻造的装备":
-                    Turn.setItemNum(Turn.getItemNum() + 1);
-                    pInv = CreateInventory.getInventory(3, player);
-                    player.closeInventory();
-                    player.openInventory(pInv);
-                    break;
-                case "返回主菜单":
-                    pInv = CreateInventory.getInventory(0, player);
-                    player.closeInventory();
-                    player.openInventory(pInv);
-                    break;
-                case "上一页":
-                    if (inv.getName().equals("可锻造列表")) {
-                        Turn.setMapNum(Turn.getMapNum() - 1);
-                        pInv = CreateInventory.getInventory(1, player);
-                        player.closeInventory();
-                        player.openInventory(pInv);
-                    }
-                    if (inv.getName().equals("历史锻造")) {
-                        Turn.setItemNum(Turn.getItemNum() - 1);
-                        pInv = CreateInventory.getInventory(3, player);
-                        player.closeInventory();
-                        player.openInventory(pInv);
-                    }
-                    break;
-                case "下一页":
-                    if (inv.getName().equals("可锻造列表")) {
-                        Turn.setMapNum(Turn.getMapNum() + 1);
-                        pInv = CreateInventory.getInventory(1, player);
-                        player.closeInventory();
-                        player.openInventory(pInv);
-                    }
-                    if (inv.getName().equals("历史锻造")) {
-                        Turn.setItemNum(Turn.getItemNum() + 1);
-                        pInv = CreateInventory.getInventory(3, player);
-                        player.closeInventory();
-                        player.openInventory(pInv);
-                    }
-                    break;
-            }
-        }
-        switch (inv.getName()) {
             case "可锻造列表":
+                event.setCancelled(true);
                 key = ItemConfig.getKey(ItemConfig.getMap(), eItem);
                 if (key != null) {
                     pInv = CreateInventory.getInventory(2, player);
@@ -111,6 +61,7 @@ public class ClickInventoryEvent implements Listener {
                 }
                 break;
             case "开始锻造":
+                event.setCancelled(true);
                 if ((eItem != null) && (!event.getCurrentItem().getType().equals(Material.AIR)) && (eItem.getItemMeta().getDisplayName().equals("开始锻造"))) {
                     ItemStack book = inv.getItem(19);
                     key = ItemConfig.getKey(ItemConfig.getMap(), book);
@@ -203,9 +154,15 @@ public class ClickInventoryEvent implements Listener {
                                                 }
                                             }
 
+                                            /*
                                             Inventory newInv = Bukkit.createInventory(null, 9, "请拿走你锻造的装备");
                                             newInv.setItem(4, items);
                                             player.openInventory(newInv);
+
+                                             */
+
+                                            pInv.addItem(items);
+                                            player.sendMessage(Message.getMessage("Successful"));
 
                                             PlayerData.addExp(player, ItemConfig.getExp(key));
 
@@ -230,14 +187,63 @@ public class ClickInventoryEvent implements Listener {
                     }
                 }
                 break;
-            case "请拿走你锻造的装备":
-
-                if ((event.getCurrentItem() != null) && (event.getSlot() == 4) && (inv.getName().equals("请拿走你锻造的装备"))) {
-                    player.getInventory().addItem(eItem);
-                    player.sendMessage("§a物品已经发送至背包");
-                    player.closeInventory();
-                }
+            case "历史锻造":
+                event.setCancelled(true);
                 break;
+           // case "请拿走你锻造的装备":
+            case "锻造中":
+                event.setCancelled(true);
+                break;
+        }
+        if ((eItem != null) && (!eItem.getType().equals(Material.AIR)) && (list.contains(inv.getName()))) {
+            ItemMeta eMeta = eItem.getItemMeta();
+            switch (eMeta.getDisplayName()) {
+                case "查看已学习的图纸":
+                    Turn.setMapNum(Turn.getMapNum() + 1);
+                    pInv = CreateInventory.getInventory(1, player);
+                    player.closeInventory();
+                    player.openInventory(pInv);
+                    break;
+                case "查看历史锻造的装备":
+                    Turn.setItemNum(Turn.getItemNum() + 1);
+                    pInv = CreateInventory.getInventory(3, player);
+                    player.closeInventory();
+                    player.openInventory(pInv);
+                    break;
+                case "返回主菜单":
+                    pInv = CreateInventory.getInventory(0, player);
+                    player.closeInventory();
+                    player.openInventory(pInv);
+                    break;
+                case "上一页":
+                    if (inv.getName().equals("可锻造列表")) {
+                        Turn.setMapNum(Turn.getMapNum() - 1);
+                        pInv = CreateInventory.getInventory(1, player);
+                        player.closeInventory();
+                        player.openInventory(pInv);
+                    }
+                    if (inv.getName().equals("历史锻造")) {
+                        Turn.setItemNum(Turn.getItemNum() - 1);
+                        pInv = CreateInventory.getInventory(3, player);
+                        player.closeInventory();
+                        player.openInventory(pInv);
+                    }
+                    break;
+                case "下一页":
+                    if (inv.getName().equals("可锻造列表")) {
+                        Turn.setMapNum(Turn.getMapNum() + 1);
+                        pInv = CreateInventory.getInventory(1, player);
+                        player.closeInventory();
+                        player.openInventory(pInv);
+                    }
+                    if (inv.getName().equals("历史锻造")) {
+                        Turn.setItemNum(Turn.getItemNum() + 1);
+                        pInv = CreateInventory.getInventory(3, player);
+                        player.closeInventory();
+                        player.openInventory(pInv);
+                    }
+                    break;
+            }
         }
     }
 }
