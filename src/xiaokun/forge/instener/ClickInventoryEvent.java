@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import xiaokun.forge.Forge;
 import xiaokun.forge.event.ExpChangeEvent;
 import xiaokun.forge.until.*;
@@ -206,9 +207,15 @@ public class ClickInventoryEvent implements Listener {
                     break;
                 case "查看历史锻造的装备":
                     Turn.setItemNum(Turn.getItemNum() + 1);
-                    pInv = CreateInventory.getInventory(3, player);
-                    player.closeInventory();
-                    player.openInventory(pInv);
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            pInv = CreateInventory.getInventory(3, player);
+                            player.closeInventory();
+                            player.openInventory(pInv);
+
+                        }
+                    }.runTask(Forge.getPlugin());
                     break;
                 case "返回主菜单":
                     pInv = CreateInventory.getInventory(0, player);

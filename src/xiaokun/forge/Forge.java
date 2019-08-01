@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xiaokun.forge.command.OnCommand;
 import xiaokun.forge.instener.ClickInventoryEvent;
 import xiaokun.forge.instener.InteractEvent;
+import xiaokun.forge.instener.JoinEvent;
 import xiaokun.forge.until.*;
 
 import java.util.Collection;
@@ -35,6 +36,7 @@ public class Forge extends JavaPlugin {
         Bukkit.getPluginCommand("dz").setExecutor(new OnCommand());
         Bukkit.getPluginManager().registerEvents(new ClickInventoryEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InteractEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new JoinEvent(),this);
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new Papi().register();
         } else {

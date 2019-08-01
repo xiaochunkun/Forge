@@ -17,12 +17,12 @@ public class PlayerData {
     public static void loadPlayerData(final Player player) {
         File FILE = getPlayerFile(player);
         if (!FILE.exists()) {
-            Message.sendMessage("创建新玩家 §e[§4" + FILE.getName() + "§e] §a配置");
             createDefaultPlayerData(player);
         }
     }
 
     public static void createDefaultPlayerData(final Player player) {
+        Message.sendMessage("创建新玩家 §e[§4" +player.getName() + "§e] §a配置");
         File FILE = getPlayerFile(player);
         YamlConfiguration playerData = new YamlConfiguration();
         playerData.set("forge.level", 1);

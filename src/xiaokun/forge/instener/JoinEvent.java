@@ -12,7 +12,7 @@ public class JoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
         if(!PlayerData.getPlayerFile(player).exists()) {
-            PlayerData.createDefaultPlayerData(player);
+            PlayerData.loadPlayerData(player);
         }
     }
 }

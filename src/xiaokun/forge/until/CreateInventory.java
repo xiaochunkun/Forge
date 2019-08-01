@@ -13,14 +13,14 @@ public class CreateInventory {
     private static ItemStack item;
     private static ItemMeta meta;
 
-     public static Inventory getInventory(int type, Player player){
-        if (type  == 0){
-            inv = Bukkit.createInventory(null,27,"锻造台");
+    public static Inventory getInventory(int type, Player player) {
+        if (type == 0) {
+            inv = Bukkit.createInventory(null, 27, "锻造台");
             item = new ItemStack(Material.ENCHANTED_BOOK);
             meta = item.getItemMeta();
             meta.setDisplayName("查看已学习的图纸");
             item.setItemMeta(meta);
-            inv.setItem(11,item);
+            inv.setItem(11, item);
 
             meta.setDisplayName("查看历史锻造的装备");
             item.setItemMeta(meta);
@@ -29,24 +29,24 @@ public class CreateInventory {
             Turn.init();
             return inv;
         }
-        if(type == 1){
-            inv = Bukkit.createInventory(null,54,"可锻造列表");
+        if (type == 1) {
+            inv = Bukkit.createInventory(null, 54, "可锻造列表");
             int num = PlayerData.getMapNum(player);
             for (int i = 0; i < num; i++) {
-                if(i < ((Turn.getMapNum()) * 45)) {
-                    if(PlayerData.getMap(player, ((Turn.getMapNum() - 1) * 45) + i) != null) {
+                if (i < ((Turn.getMapNum()) * 45)) {
+                    if (PlayerData.getMap(player, ((Turn.getMapNum() - 1) * 45) + i) != null) {
                         inv.addItem(PlayerData.getMap(player, ((Turn.getMapNum() - 1) * 45) + i));
                     }
-                }else {
+                } else {
                     break;
                 }
             }
             setInventory(inv);
             return inv;
-         }
-        if (type == 2){
-            inv = Bukkit.createInventory(null,54,"开始锻造");
-            ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE,1,(short) 11);
+        }
+        if (type == 2) {
+            inv = Bukkit.createInventory(null, 54, "开始锻造");
+            ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 11);
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(" ");
             item.setItemMeta(meta);
@@ -87,15 +87,15 @@ public class CreateInventory {
             inv.setItem(49, item);
             return inv;
         }
-        if(type == 3){
-            inv = Bukkit.createInventory(null,54,"历史锻造");
+        if (type == 3) {
+            inv = Bukkit.createInventory(null, 54, "历史锻造");
             int num = PlayerData.getItemNum(player);
             for (int i = 0; i < num; i++) {
-                if(i < ((Turn.getItemNum()) * 45)) {
-                    if(PlayerData.getItem(player, ((Turn.getItemNum() -1) * 45) + i) != null) {
-                        inv.addItem(PlayerData.getItem(player, ((Turn.getItemNum() -1) * 45) + i));
+                if (i < ((Turn.getItemNum()) * 45)) {
+                    if (PlayerData.getItem(player, ((Turn.getItemNum() - 1) * 45) + i) != null) {
+                        inv.addItem(PlayerData.getItem(player, ((Turn.getItemNum() - 1) * 45) + i));
                     }
-                }else {
+                } else {
                     break;
                 }
             }
@@ -106,7 +106,7 @@ public class CreateInventory {
     }
 
     static void setInventory(Inventory inv) {
-        item = new ItemStack(Material.STAINED_GLASS_PANE,1,(short) 11);
+        item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 11);
         meta = item.getItemMeta();
         meta.setDisplayName(" ");
         item.setItemMeta(meta);
